@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Robust Speech-Driven Body Language Generation">
+  <meta property="og:title" content="Robust Speech-Driven Body Language Generation"/>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">    
+  
+  <title>Robust Speech-Driven Body Language Generation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/audio-table.css">
+  <link rel="stylesheet" type="text/css" href="static/css/dropdown_style.css">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+              <h1 id="co-speech-modalities" class="title is-1 publication-title">Robust Speech-Driven Body Language Generation</h1>
+              <!-- <p  class="title is-1 publication-title">Body Language Synthesis</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	  
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+                <p>
+With the continuous advancement of video generation technologies, researchers have developed speech-driven body language synthesis, including co-speech gestures. However, due to the lack of paired data between visual speech (i.e., lip movements) and body language, existing methods typically rely solely on audio speech. This reliance makes it challenging to accurately synthesize the desired outcomes in noisy environments. To address this limitation, we introduce AV2Body, a robust speech-driven body language synthesis method designed to achieve reliable synthesis even under noisy conditions. Experimental results demonstrate that our method excels in synthesizing a variety of body language modalities in noisy environments, exhibiting strong noise robustness.
+            </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+    <!-- Table of Contents -->
+
+  <section class="hero">
+    <div class="hero-body">
+        <div class="container">
+          <h1 class="title is-3">AV-SDS</h1>
+            <h2><a href="#unit-based-synthesis">A.Unit-Based Body Language Synthesis.</a></h2>
+            <li><a href="#Talking_Head">A.1 Talking Head & Lip movements</a></li>
+            <li><a href="#LandMark">A.2 3D LandMark</a></li>
+            <li><a href="#Gesture">A.3 Co-Speech Gesture</a></li>
+            <li><a href="#Mesh">A.4 Mesh</a></li>
+		
+            <h2><a href="#AV-SDS">B.Audio-Visual Speech-Driven Body Language Synthesis.</a></h2>
+
+            <h2><a href="#Speech_Denoising">C.Speech Enhancement.</a></h2>
+          </ul>
+        </div>
+    </div>
+  </section>
+
+
+  <section class="hero">
+      <div class="hero-body">
+          <div class="container">
+          <h1 id="unit-based-synthesis" class="title is-3">A.Unit-Based Synthesis for Co-Speech Modalities.</h1>
+              <h4 id="Talking_Head" class="title is-4">A.1 Talking Head & Lip movements</h4>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                        <th>Driving Audio</th>
+                        <th>Audio2X</th>
+                        <th>U2S+S2X</th>
+                        <th>U2X</th>
+
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample1/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample1/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample1/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample1/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample2/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample2/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample2/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample2/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample3/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample3/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample3/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample3/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample4/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample4/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample4/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/TalkingHead/sample4/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+
+                  </table>
+              </div>
+              <br>
+
+              <h4 id="LandMark" class="title is-4">A.2 3D LandMark</h4>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                          <th>Ground Truth</th>
+                          <th>Audio2X</th>
+                          <th>U2S+S2X</th>
+                          <th>U2X</th>
+                      </tr>
+
+
+                      <tr >
+
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample1/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample1/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample1/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample1/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample2/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample2/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample2/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample2/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample3/GT.mp4"></video>
+                          </th>
+
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample3/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample3/U2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample3/U2S+S2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample4/GT.mp4"></video>
+                          </th>
+
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample4/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample4/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 200px;"><source src="Supplementary_Material/Ldmk/sample4/U2X.mp4"></video>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+              <br>
+
+              <h4 id="Gesture" class="title is-4">A.3 Co-Speech Gesture</h4>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                          <th>Audio2X</th>
+                          <th>U2S+S2X</th>
+                          <th>U2X</th>
+                      </tr>
+
+
+                      <tr >
+
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample1/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample1/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample1/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample2/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample2/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample2/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample3/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample3/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample3/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample4/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample4/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 300px;"><source src="Supplementary_Material/Gesture/sample4/U2X.mp4"></video>
+                          </th>
+                      </tr>
+                  </table>
+              </div>
+              <br>
+
+              <h4 id="Mesh" class="title is-4">A.4 Mesh</h4>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                          <th>Driving Audio</th>
+                          <th>Ground Truth</th>
+                          <th>Audio2X</th>
+                          <th>U2S+S2X</th>
+                          <th>U2X</th>
+                      </tr>
+
+                      <tr >
+
+                          <th style=" vertical-align:middle;">
+                              <audio  controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample1/audio.wav" type="audio/wav"></audio>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample1/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample1/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample1/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample1/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <audio  controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample2/audio.wav"          type="audio/wav"></audio>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample2/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample2/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample2/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample2/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+
+                      <tr >
+                          <th style=" vertical-align:middle;">
+                              <audio  controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample3/audio.wav" type="audio/wav"></audio>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample3/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample3/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample3/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample3/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                      <tr >
+
+                          <th style=" vertical-align:middle;">
+                              <audio  controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample4/audio.wav"          type="audio/wav"></audio>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample4/GT.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample4/Audio2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample4/U2S+S2X.mp4"></video>
+                          </th>
+                          <th style=" vertical-align:middle;">
+                              <video controls style="width: 150px;"><source src="Supplementary_Material/Mesh/sample4/U2X.mp4"></video>
+                          </th>
+                      </tr>
+
+                  </table>
+              </div>
+              <br>
+          </div>
+
+          <br><br>
+          <div class="container">
+          <h1 id="AV-SDS" class="title is-3">B.Audio-Visual Speech-Driven Body Language Synthesis.</h1>
+            <h4 id="av-Mesh" class="title is-4">B.1 Audio-Visual Speech-Driven Talking Head Generation</h4>
+              <p>The sample presented here has been <strong style="color:red;">dubbed with clear audio</strong>.</p>
+
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                          <th></th>
+                          <th>Method</th>
+                          <th>SNR=15</th>
+                          <th>SNR=5</th>
+                          <th>SNR=-5</th>
+                          <th>SNR=-15</th>
+                      </tr>
+
+                    <tr >
+                        <th rowspan="3"> Sample1</th>
+                        <th style=" vertical-align:middle;" width="10%">Driven speech</th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/15/00035.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/5/00035.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/fu5/00035.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/fu15/00035.mp3"></audio>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">S2X</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/15/00035.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/5/00035.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/fu5/00035.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/fu15/00035.mp4"></video>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">AV-SDS</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/15/00035.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/5/00035.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/fu5/00035.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/fu15/00035.mp4"></video>
+                        </th>
+                    </tr>
+
+                      <tr >
+                        <th rowspan="3"> Sample2</th>
+                        <th style=" vertical-align:middle;" width="10%">Driven speech</th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/15/00097.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/5/00097.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/fu5/00097.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/audio/fu15/00097.mp3"></audio>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">S2X</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/15/00097.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/5/00097.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/fu5/00097.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/noise/fu15/00097.mp4"></video>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">AV-SDS</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/15/00097.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/5/00097.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/fu5/00097.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/lip_av/av-sds/fu15/00097.mp4"></video>
+                        </th>
+                    </tr>
+                  </table>
+              </div>
+              <br>
+            <h4 id="av-Lip" class="title is-4">B.2 Audio-Visual Speech-Driven 3D Facial Animation</h4>
+              <p>The sample presented here has been <strong style="color:red;">dubbed with clear audio</strong>.</p>
+
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                          <th></th>
+                          <th>Method</th>
+                          <th>SNR=15</th>
+                          <th>SNR=5</th>
+                          <th>SNR=-5</th>
+                          <th>SNR=-15</th>
+                      </tr>
+
+                    <tr >
+                        <th rowspan="3"> Sample1</th>
+                        <th style=" vertical-align:middle;" width="10%">Driven speech</th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/audio/15.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/audio/5.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/audio/fu5.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/audio/fu15.mp3"></audio>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">S2X</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/noise/15.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/noise/5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/noise/fu5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/noise/fu15.mp4"></video>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">AV-SDS</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/av-sds/15.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/av-sds/5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/av-sds/fu5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample1/av-sds/fu15.mp4"></video>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th rowspan="3"> Sample1</th>
+                        <th style=" vertical-align:middle;" width="10%">Driven speech</th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/audio/15.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/audio/5.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/audio/fu5.mp3"></audio>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <audio controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/audio/fu15.mp3"></audio>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">S2X</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/noise/15.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/noise/5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/noise/fu5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/noise/fu15.mp4"></video>
+                        </th>
+                    </tr>
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">AV-SDS</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/av-sds/15.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/av-sds/5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/av-sds/fu5.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/av/mesh-av/sample2/av-sds/fu15.mp4"></video>
+                        </th>
+                    </tr>
+                  </table>
+              </div>
+              <br>
+          </div>
+
+          <br><br>
+          <div class="container">
+          <h1 id="Speech_Denoising" class="title is-3">C.Speech Enhancement.</h1>
+              <div class="grid-container">
+                  <table >
+                      <tr >
+                          <th>SNR</th>
+                          <th>Target.Audio</th>
+                          <th>Inp.Audio</th>
+                          <th>RESYNTHESIS</th>
+                          <th>ReVISE (AV-S2UM(semantic))</th>
+                          <th>AV-S2UM(acoustic)(ours)</th>
+                      </tr>
+
+
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">SNR = 15</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=15/ori.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=15/noise_audio.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=15/resynth.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=15/revise.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=15/SpeechBind.mp4"></video>
+                        </th>
+                    </tr>
+
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">SNR = 5</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=5/ori.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=5/noise_audio.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=5/resynth.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=5/revise.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=5/SpeechBind.mp4"></video>
+                        </th>
+                    </tr>
+
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">SNR = -5</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-5/ori.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-5/noise_audio.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-5/resynth.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-5/revise.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-5/SpeechBind.mp4"></video>
+                        </th>
+                    </tr>
+
+                    <tr >
+                        <th style=" vertical-align:middle;" width="10%">SNR = -15</th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-15/ori.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-15/noise_audio.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-15/resynth.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-15/revise.mp4"></video>
+                        </th>
+                        <th style=" vertical-align:middle;">
+                            <video controls style="width: 150px;"><source src="Supplementary_Material/B1/SNR=-15/SpeechBind.mp4"></video>
+                        </th>
+                    </tr>
+                  </table>
+              </div>
+              <br>
+          </div>
+      </div>
+
+
+  </section>
+
+
